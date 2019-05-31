@@ -1,20 +1,29 @@
 console.log("Hola node")
-
 var Twit = require('twit');
 var config  = require('./config');
+var url = require('./giphy');
+
 var T = new Twit(config);
 console.log("El bot ha iniciado")
 
-var tweet = {
-    status: 'https://gph.is/XGmwPz'
-}
+//url.descargarGif();
+setInterval(url.descargarGif, 1000*10);
 
-T.post('statuses/update', tweet, tweeted);
+//setInterval(tweetear, 1000*10);
 
-function tweeted(err, data, response){
-    if(err){
-        console.log('Algo salió mal :(');
-    }else{
-        console.log('Twit hecho! :D');
+function tweetear(){
+    var r = Math.floor(Math.random()*100);
+    var tweet = {
+        status: 'Tu numero es ' + r
+    }
+
+    T.post('statuses/update', tweet, tweeted);
+
+    function tweeted(err, data, response){
+        if(err){
+            console.log('Algo salió mal :(');
+        }else{
+            console.log('Twit hecho! :D');
+        }
     }
 }
